@@ -1,0 +1,36 @@
+1. Architecture technique (Modèle en couches)
+ Optez pour une architecture modulaire en microservices (ou monolithe modulaire bien découplé) :
+ · Front-end : Application Web (React/Angular) + App mobile (Flutter) pour les étudiants.
+· API Gateway : Point d'entrée unique qui achemine les requêtes et gère l'authentification (JWT/OAuth2).
+· Back-end (APIs REST/GraphQL) : Divisé par domaines métier.
+· Base de données : Relationnelle (PostgreSQL) pour les données transactionnelles + un moteur de recherche (Elasticsearch) pour les annuaires.
+ ---
+ 2. Gestion des identités et des rôles (RBAC)
+ C'est le cœur de la sécurité. Une table Users avec un champ role_id.
+ · Rôle Administratif : Gestion des paramètres, finance, RH, flux d'inscription.
+· Rôle Enseignant : Saisie des notes, consultation des listes, dépôt de cours.
+· Rôle Étudiant : Consultation des notes, emploi du temps, paiements, inscription pédagogique.
+· Héritage : Les profils (Professeur, Agent, Étudiant) héritent de User mais ont leurs propres attributs spécifiques (ex: specialite pour prof, matricule et promotion pour étudiant).
+ ---
+ 3. Modules fonctionnels principaux
+ · Module Scolarité/Pédagogie :
+  · Gestion des UE (Unités d'Enseignement), matières, coefficients.
+  · Inscriptions administratives et pédagogiques (avec périodes de validation).
+  · Relevés de notes, calcul des moyennes, jury (délibérations).
+· Module RH & Personnel :
+  · Gestion des contrats, charges, diplômes et disponibilités des enseignants.
+  · Pointage (présence) du personnel administratif.
+· Module Financier :
+  · Gestion des frais de scolarité, échéanciers de paiement, reçus.
+  · (Pour les admins) Gestion des paies et du budget.
+· Module Emploi du temps :
+  · Allocation des salles, créneaux horaires, gestion des conflits (un prof ou une salle ne peut pas être à deux endroits).
+ ---
+ 4. Modèle de données simplifié (Entités clés)
+ · Personne (ID, Nom, Prénom, Email, Téléphone, Adresse).
+  · Étudiant (Matricule, Année entrée, Promotion, Groupe TD).
+  · Enseignant (Grade, Spécialité, Statut (permanent/vacataire)).
+  · Admin (Service rattaché, habilitations).
+· Cours (ID, Intitulé, Volume horaire, Coefficient, Enseignant_référent).
+· Inscription (Étudiant_ID, Cours_ID, Année, Statut (Validé/En cours/Echec)).
+· Note (Inscription_ID, Note_CC, Note_Examen, Session).

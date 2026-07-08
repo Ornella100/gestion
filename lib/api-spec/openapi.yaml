@@ -1,0 +1,988 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: University Dashboard API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: stats
+    description: Dashboard statistics
+  - name: students
+    description: Student management
+  - name: teachers
+    description: Teacher management
+  - name: programs
+    description: Program (filière) management
+  - name: classes
+    description: Class management
+  - name: enrollments
+    description: Enrollment management
+  - name: payments
+    description: Payment management
+  - name: events
+    description: Calendar events
+  - name: academic-years
+    description: Academic year management
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /stats/overview:
+    get:
+      operationId: getStatsOverview
+      tags: [stats]
+      summary: Get dashboard overview statistics
+      parameters:
+        - name: academicYearId
+          in: query
+          schema:
+            type: ["integer", "null"]
+      responses:
+        "200":
+          description: Overview statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatsOverview"
+
+  /stats/enrollments-by-month:
+    get:
+      operationId: getEnrollmentsByMonth
+      tags: [stats]
+      summary: Get enrollments grouped by month for charts
+      parameters:
+        - name: academicYearId
+          in: query
+          schema:
+            type: ["integer", "null"]
+      responses:
+        "200":
+          description: Monthly enrollment data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MonthlyCount"
+
+  /stats/revenue-by-month:
+    get:
+      operationId: getRevenueByMonth
+      tags: [stats]
+      summary: Get revenue grouped by month for charts
+      parameters:
+        - name: academicYearId
+          in: query
+          schema:
+            type: ["integer", "null"]
+      responses:
+        "200":
+          description: Monthly revenue data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MonthlyRevenue"
+
+  /students:
+    get:
+      operationId: listStudents
+      tags: [students]
+      summary: List all students
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: ["string", "null"]
+        - name: programId
+          in: query
+          schema:
+            type: ["integer", "null"]
+        - name: academicYearId
+          in: query
+          schema:
+            type: ["integer", "null"]
+        - name: limit
+          in: query
+          schema:
+            type: ["integer", "null"]
+        - name: offset
+          in: query
+          schema:
+            type: ["integer", "null"]
+      responses:
+        "200":
+          description: List of students
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StudentList"
+    post:
+      operationId: createStudent
+      tags: [students]
+      summary: Create a student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StudentInput"
+      responses:
+        "201":
+          description: Created student
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Student"
+
+  /students/recent:
+    get:
+      operationId: getRecentStudents
+      tags: [students]
+      summary: Get recently enrolled students
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: ["integer", "null"]
+      responses:
+        "200":
+          description: Recently enrolled students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/StudentWithEnrollment"
+
+  /students/{id}:
+    get:
+      operationId: getStudent
+      tags: [students]
+      summary: Get a student by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Student
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Student"
+        "404":
+          description: Not found
+
+  /teachers:
+    get:
+      operationId: listTeachers
+      tags: [teachers]
+      summary: List all teachers
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: ["string", "null"]
+        - name: programId
+          in: query
+          schema:
+            type: ["integer", "null"]
+      responses:
+        "200":
+          description: List of teachers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Teacher"
+    post:
+      operationId: createTeacher
+      tags: [teachers]
+      summary: Create a teacher
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TeacherInput"
+      responses:
+        "201":
+          description: Created teacher
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Teacher"
+
+  /programs:
+    get:
+      operationId: listPrograms
+      tags: [programs]
+      summary: List all programs (filières)
+      responses:
+        "200":
+          description: List of programs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Program"
+    post:
+      operationId: createProgram
+      tags: [programs]
+      summary: Create a program
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProgramInput"
+      responses:
+        "201":
+          description: Created program
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Program"
+
+  /classes:
+    get:
+      operationId: listClasses
+      tags: [classes]
+      summary: List all classes
+      parameters:
+        - name: programId
+          in: query
+          schema:
+            type: ["integer", "null"]
+        - name: academicYearId
+          in: query
+          schema:
+            type: ["integer", "null"]
+      responses:
+        "200":
+          description: List of classes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Class"
+    post:
+      operationId: createClass
+      tags: [classes]
+      summary: Create a class
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClassInput"
+      responses:
+        "201":
+          description: Created class
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Class"
+
+  /enrollments:
+    get:
+      operationId: listEnrollments
+      tags: [enrollments]
+      summary: List enrollments
+      parameters:
+        - name: academicYearId
+          in: query
+          schema:
+            type: ["integer", "null"]
+        - name: studentId
+          in: query
+          schema:
+            type: ["integer", "null"]
+        - name: classId
+          in: query
+          schema:
+            type: ["integer", "null"]
+        - name: status
+          in: query
+          schema:
+            type: ["string", "null"]
+      responses:
+        "200":
+          description: List of enrollments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Enrollment"
+    post:
+      operationId: createEnrollment
+      tags: [enrollments]
+      summary: Create an enrollment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EnrollmentInput"
+      responses:
+        "201":
+          description: Created enrollment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Enrollment"
+
+  /payments:
+    get:
+      operationId: listPayments
+      tags: [payments]
+      summary: List payments
+      parameters:
+        - name: academicYearId
+          in: query
+          schema:
+            type: ["integer", "null"]
+        - name: studentId
+          in: query
+          schema:
+            type: ["integer", "null"]
+        - name: status
+          in: query
+          schema:
+            type: ["string", "null"]
+        - name: limit
+          in: query
+          schema:
+            type: ["integer", "null"]
+        - name: offset
+          in: query
+          schema:
+            type: ["integer", "null"]
+      responses:
+        "200":
+          description: List of payments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Payment"
+    post:
+      operationId: createPayment
+      tags: [payments]
+      summary: Create a payment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentInput"
+      responses:
+        "201":
+          description: Created payment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+
+  /payments/recent:
+    get:
+      operationId: getRecentPayments
+      tags: [payments]
+      summary: Get recent payments
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: ["integer", "null"]
+      responses:
+        "200":
+          description: Recent payments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PaymentWithStudent"
+
+  /payments/daily-summary:
+    get:
+      operationId: getDailyPaymentSummary
+      tags: [payments]
+      summary: Get today's payment summary
+      responses:
+        "200":
+          description: Daily payment summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DailyPaymentSummary"
+
+  /events:
+    get:
+      operationId: listEvents
+      tags: [events]
+      summary: List calendar events
+      parameters:
+        - name: from
+          in: query
+          schema:
+            type: ["string", "null"]
+            format: date
+        - name: to
+          in: query
+          schema:
+            type: ["string", "null"]
+            format: date
+      responses:
+        "200":
+          description: List of events
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Event"
+    post:
+      operationId: createEvent
+      tags: [events]
+      summary: Create an event
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EventInput"
+      responses:
+        "201":
+          description: Created event
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+
+  /academic-years:
+    get:
+      operationId: listAcademicYears
+      tags: [academic-years]
+      summary: List all academic years
+      responses:
+        "200":
+          description: List of academic years
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AcademicYear"
+    post:
+      operationId: createAcademicYear
+      tags: [academic-years]
+      summary: Create an academic year
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AcademicYearInput"
+      responses:
+        "201":
+          description: Created academic year
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AcademicYear"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    StatsOverview:
+      type: object
+      required:
+        - totalStudents
+        - totalTeachers
+        - totalPrograms
+        - totalClasses
+        - totalEnrollments
+        - dailyPaymentsCount
+        - dailyPaymentsAmount
+        - totalRevenue
+      properties:
+        totalStudents:
+          type: integer
+        totalTeachers:
+          type: integer
+        totalPrograms:
+          type: integer
+        totalClasses:
+          type: integer
+        totalEnrollments:
+          type: integer
+        dailyPaymentsCount:
+          type: integer
+        dailyPaymentsAmount:
+          type: number
+        totalRevenue:
+          type: number
+
+    MonthlyCount:
+      type: object
+      required: [month, year, count]
+      properties:
+        month:
+          type: string
+        year:
+          type: integer
+        count:
+          type: integer
+
+    MonthlyRevenue:
+      type: object
+      required: [month, year, amount]
+      properties:
+        month:
+          type: string
+        year:
+          type: integer
+        amount:
+          type: number
+
+    Student:
+      type: object
+      required: [id, firstName, lastName, email, studentNumber, createdAt]
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        studentNumber:
+          type: string
+        phone:
+          type: ["string", "null"]
+        dateOfBirth:
+          type: ["string", "null"]
+          format: date
+        gender:
+          type: ["string", "null"]
+        address:
+          type: ["string", "null"]
+        photoUrl:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+          format: date-time
+
+    StudentInput:
+      type: object
+      required: [firstName, lastName, email, studentNumber]
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        studentNumber:
+          type: string
+        phone:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        gender:
+          type: string
+        address:
+          type: string
+        photoUrl:
+          type: string
+
+    StudentWithEnrollment:
+      type: object
+      required: [id, firstName, lastName, email, studentNumber, createdAt]
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        studentNumber:
+          type: string
+        photoUrl:
+          type: ["string", "null"]
+        programName:
+          type: ["string", "null"]
+        className:
+          type: ["string", "null"]
+        enrolledAt:
+          type: ["string", "null"]
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+
+    StudentList:
+      type: object
+      required: [data, total]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Student"
+        total:
+          type: integer
+
+    Teacher:
+      type: object
+      required: [id, firstName, lastName, email, createdAt]
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: ["string", "null"]
+        specialization:
+          type: ["string", "null"]
+        grade:
+          type: ["string", "null"]
+        photoUrl:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+          format: date-time
+
+    TeacherInput:
+      type: object
+      required: [firstName, lastName, email]
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        specialization:
+          type: string
+        grade:
+          type: string
+        photoUrl:
+          type: string
+
+    Program:
+      type: object
+      required: [id, name, code, createdAt]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        code:
+          type: string
+        description:
+          type: ["string", "null"]
+        duration:
+          type: ["integer", "null"]
+          description: Duration in years
+        studentCount:
+          type: ["integer", "null"]
+        createdAt:
+          type: string
+          format: date-time
+
+    ProgramInput:
+      type: object
+      required: [name, code]
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+        description:
+          type: string
+        duration:
+          type: integer
+
+    Class:
+      type: object
+      required: [id, name, academicYearId, createdAt]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        programId:
+          type: ["integer", "null"]
+        programName:
+          type: ["string", "null"]
+        academicYearId:
+          type: integer
+        academicYearLabel:
+          type: ["string", "null"]
+        capacity:
+          type: ["integer", "null"]
+        studentCount:
+          type: ["integer", "null"]
+        createdAt:
+          type: string
+          format: date-time
+
+    ClassInput:
+      type: object
+      required: [name, academicYearId]
+      properties:
+        name:
+          type: string
+        programId:
+          type: integer
+        academicYearId:
+          type: integer
+        capacity:
+          type: integer
+
+    Enrollment:
+      type: object
+      required: [id, studentId, classId, academicYearId, status, enrolledAt]
+      properties:
+        id:
+          type: integer
+        studentId:
+          type: integer
+        studentName:
+          type: ["string", "null"]
+        classId:
+          type: integer
+        className:
+          type: ["string", "null"]
+        academicYearId:
+          type: integer
+        academicYearLabel:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [active, suspended, completed, dropped]
+        enrolledAt:
+          type: string
+          format: date-time
+
+    EnrollmentInput:
+      type: object
+      required: [studentId, classId, academicYearId]
+      properties:
+        studentId:
+          type: integer
+        classId:
+          type: integer
+        academicYearId:
+          type: integer
+        status:
+          type: string
+          enum: [active, suspended, completed, dropped]
+
+    Payment:
+      type: object
+      required: [id, studentId, amount, paymentType, status, paidAt]
+      properties:
+        id:
+          type: integer
+        studentId:
+          type: integer
+        studentName:
+          type: ["string", "null"]
+        academicYearId:
+          type: ["integer", "null"]
+        amount:
+          type: number
+        paymentType:
+          type: string
+          enum: [inscription, mensualite, retard, autre]
+        status:
+          type: string
+          enum: [paid, pending, failed]
+        reference:
+          type: ["string", "null"]
+        notes:
+          type: ["string", "null"]
+        paidAt:
+          type: string
+          format: date-time
+
+    PaymentInput:
+      type: object
+      required: [studentId, amount, paymentType]
+      properties:
+        studentId:
+          type: integer
+        academicYearId:
+          type: integer
+        amount:
+          type: number
+        paymentType:
+          type: string
+          enum: [inscription, mensualite, retard, autre]
+        status:
+          type: string
+          enum: [paid, pending, failed]
+        reference:
+          type: string
+        notes:
+          type: string
+
+    PaymentWithStudent:
+      type: object
+      required: [id, studentId, amount, paymentType, status, paidAt]
+      properties:
+        id:
+          type: integer
+        studentId:
+          type: integer
+        studentName:
+          type: string
+        studentNumber:
+          type: ["string", "null"]
+        photoUrl:
+          type: ["string", "null"]
+        amount:
+          type: number
+        paymentType:
+          type: string
+          enum: [inscription, mensualite, retard, autre]
+        status:
+          type: string
+          enum: [paid, pending, failed]
+        reference:
+          type: ["string", "null"]
+        paidAt:
+          type: string
+          format: date-time
+
+    DailyPaymentSummary:
+      type: object
+      required: [count, totalAmount, date]
+      properties:
+        count:
+          type: integer
+        totalAmount:
+          type: number
+        date:
+          type: string
+          format: date
+
+    Event:
+      type: object
+      required: [id, title, startDate, createdAt]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: ["string", "null"]
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: ["string", "null"]
+          format: date-time
+        type:
+          type: ["string", "null"]
+          enum: [exam, reunion, conge, cours, autre]
+        color:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+          format: date-time
+
+    EventInput:
+      type: object
+      required: [title, startDate]
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        type:
+          type: string
+          enum: [exam, reunion, conge, cours, autre]
+        color:
+          type: string
+
+    AcademicYear:
+      type: object
+      required: [id, label, startDate, endDate, isCurrent]
+      properties:
+        id:
+          type: integer
+        label:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        isCurrent:
+          type: boolean
+
+    AcademicYearInput:
+      type: object
+      required: [label, startDate, endDate]
+      properties:
+        label:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        isCurrent:
+          type: boolean

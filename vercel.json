@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "artifacts/university-dashboard/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "artifacts/university-dashboard/dist"
+      }
+    },
+    {
+      "src": "artifacts/api-server/dist/index.mjs",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["artifacts/api-server/dist/**"]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "^/api/(.*)$",
+      "dest": "/artifacts/api-server/dist/index.mjs"
+    },
+    {
+      "src": "^/(.*)$",
+      "dest": "/artifacts/university-dashboard/dist/$1"
+    },
+    {
+      "src": "^/.*$",
+      "dest": "/artifacts/university-dashboard/dist/index.html"
+    }
+  ]
+}

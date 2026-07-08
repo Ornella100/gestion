@@ -1,0 +1,1 @@
+- [University Dashboard Architecture](university-dashboard.md) — API at /api, frontend at /, year filter via ?annee= param, sidebar items need matching routes or ComingSoon pages.
