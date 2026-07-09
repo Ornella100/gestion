@@ -8,11 +8,11 @@ Ce guide vous explique comment faire tourner le projet sur votre PC (Windows, Ma
 
 | Outil | Version minimale | Lien |
 |---|---|---|
-| Node.js | 20+ | https://nodejs.org |
+| Node.js | 20+ |
 | pnpm | 10+ | `npm install -g pnpm` |
-| PostgreSQL | 15+ (optionnel pour l'instant) | https://www.postgresql.org/download |
+| XAMPP | Avec MySQL/MariaDB activé |
 
-> **Note** : La base de données n'est pas encore requise. Toutes les données affichées sont des données fictives. Vous pouvez lancer le projet sans PostgreSQL.
+> **Note** : le projet utilise maintenant la base MySQL/MariaDB `universite` de XAMPP. Les anciennes données fictives servent seulement de secours côté interface si l'API locale est arrêtée.
 
 ---
 
@@ -26,88 +26,62 @@ pnpm install
 
 ---
 
-## 2. Configuration des variables d'environnement
+## 2. Préparer la base `universite`
 
-### Serveur API (`artifacts/api-server/`)
-
-Copiez le fichier exemple et modifiez-le :
+Depuis la racine du projet :
 
 ```bash
-cp artifacts/api-server/.env.example artifacts/api-server/.env
+pnpm run db:setup
 ```
 
-Contenu minimal pour démarrer (sans base de données) :
+Cette commande :
 
-```env
-PORT=8080
-SESSION_SECRET=une-cle-secrete-longue-et-aleatoire
-LOG_LEVEL=info
-```
+- lit les informations existantes dans les fichiers du projet ;
+- génère `database/universite.sql` ;
+- crée/remplit la base `universite` dans XAMPP/MySQL.
 
-### Frontend (`artifacts/university-dashboard/`)
-
-Aucune configuration requise pour démarrer. Le proxy Vite redirige `/api` vers `localhost:8080` automatiquement.
-
----
-
-## 3. Lancer le projet
-
-Ouvrez **deux terminaux** :
-
-**Terminal 1 — Serveur API :**
-```bash
-cd artifacts/api-server
-pnpm dev
-# Le serveur écoute sur http://localhost:8080
-```
-
-**Terminal 2 — Interface web :**
-```bash
-cd artifacts/university-dashboard
-pnpm dev
-# L'interface est accessible sur http://localhost:5173
-```
-
-Ouvrez votre navigateur sur **http://localhost:5173**
-
----
-
-## 4. Ajouter une vraie base de données (optionnel)
-
-### 4a. Créer la base PostgreSQL
-
-```sql
--- Dans psql ou pgAdmin :
-CREATE DATABASE university_db;
-```
-
-### 4b. Configurer la connexion
-
-Dans `artifacts/api-server/.env`, décommentez et remplissez :
-
-```env
-DATABASE_URL=postgresql://postgres:motdepasse@localhost:5432/university_db
-```
-
-### 4c. Appliquer le schéma
+## 3. Lancer le projet en un seul endroit
 
 ```bash
-cd lib/db
-pnpm push
+pnpm run dev
 ```
 
----
+Cette commande lance ensemble :
 
-## Structure du projet
+- l'API PHP MySQL sur `http://localhost:8000/api` ;
+- le dashboard React/Vite sur `http://localhost:5174`.
+
+Ouvrez ensuite :
+
+```text
+http://localhost:5174
+```
+
+## 4. Commandes utiles
+
+```bash
+pnpm run db:generate
+pnpm run db:import
+pnpm --dir artifacts/university-dashboard run build
+```
+
+## Structure simplifiée d'utilisation
+
+Vous travaillez depuis la racine du projet :
+
+- `pnpm run db:setup` prépare la base ;
+- `pnpm run dev` lance tout ;
+- l'interface lit les données depuis XAMPP/MySQL via `api/index.php`.
+
+## Structure technique
 
 ```
 University-Insights/
+├── api/                   ← API PHP qui lit MySQL/XAMPP
+├── database/              ← SQL généré pour la base universite
+├── scripts/               ← Génération/import DB + lancement unifié
 ├── artifacts/
-│   ├── api-server/        ← Serveur Express (API REST)
 │   └── university-dashboard/  ← Interface React + Vite
-├── lib/
-│   ├── db/                ← Schéma Drizzle ORM (PostgreSQL)
-│   └── api-zod/           ← Schémas de validation Zod
 └── LOCAL_SETUP.md         ← Ce fichier
 ```
 
@@ -118,6 +92,7 @@ University-Insights/
 | Erreur | Cause | Solution |
 |---|---|---|
 | `pnpm: command not found` | pnpm non installé | `npm install -g pnpm` |
-| `Error: PORT ... not provided` | .env manquant | Créez `artifacts/api-server/.env` |
-| `ECONNREFUSED localhost:8080` | API non démarrée | Lancez le terminal 1 d'abord |
-| `DATABASE_URL must be set` | DB non configurée | Commentez la ligne dans `lib/db/src/index.ts` ou ajoutez DATABASE_URL |
+| `php` introuvable | PHP/XAMPP non dans le PATH | Lancez depuis XAMPP Shell ou ajoutez `C:\xampp\php` au PATH |
+| `mysql.exe` introuvable | XAMPP installé ailleurs | Lancez avec `MYSQL_BIN=chemin\mysql.exe pnpm run db:import` |
+| `ECONNREFUSED localhost:8000` | API non démarrée | Lancez `pnpm run dev` |
+| Base vide | Import non lancé | Lancez `pnpm run db:setup` |

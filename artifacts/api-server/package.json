@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "@workspace/api-server",
   "version": "0.0.0",
   "private": true,
@@ -29,3 +29,4 @@
     "thread-stream": "3.1.0"
   }
 }
+

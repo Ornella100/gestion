@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Save, Building2, BookOpen, Users, Shield, Eye, EyeOff } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -14,9 +14,9 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const adminUsers = [
   { id:1, nom:"Administrateur Principal", email:"admin@univ.ci", role:"Super Admin", statut:"Actif", derniere_connexion:"07/07/2024 09:15" },
-  { id:2, nom:"Diallo Mariama", email:"m.diallo.admin@univ.ci", role:"Admin Scolarité", statut:"Actif", derniere_connexion:"06/07/2024 14:30" },
-  { id:3, nom:"Koné Ibrahima", email:"i.kone.admin@univ.ci", role:"Admin Finance", statut:"Actif", derniere_connexion:"05/07/2024 11:00" },
-  { id:4, nom:"Traoré Awa", email:"a.traore.admin@univ.ci", role:"Admin RH", statut:"Inactif", derniere_connexion:"01/06/2024 08:45" },
+  { id:2, nom:"Diallo Mariama", email:"m.diallo.admin@univ.ci", role:"Admin ScolaritÃ©", statut:"Actif", derniere_connexion:"06/07/2024 14:30" },
+  { id:3, nom:"KonÃ© Ibrahima", email:"i.kone.admin@univ.ci", role:"Admin Finance", statut:"Actif", derniere_connexion:"05/07/2024 11:00" },
+  { id:4, nom:"TraorÃ© Awa", email:"a.traore.admin@univ.ci", role:"Admin RH", statut:"Inactif", derniere_connexion:"01/06/2024 08:45" },
 ];
 
 function FormSection({ title, children }: { title: string; children: React.ReactNode }) {
@@ -50,12 +50,12 @@ export default function ParametresPage() {
     <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
       <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-card flex-shrink-0">
         <div>
-          <h1 className="text-xl font-bold">Paramètres</h1>
-          <p className="text-sm text-muted-foreground">Configuration générale de l'application</p>
+          <h1 className="text-xl font-bold">ParamÃ¨tres</h1>
+          <p className="text-sm text-muted-foreground">Configuration gÃ©nÃ©rale de l'application</p>
         </div>
         <Button className="gap-2 h-9" onClick={handleSave} aria-label="Sauvegarder les modifications">
           <Save size={15} aria-hidden="true" />
-          {saved ? "Sauvegardé ✓" : "Sauvegarder"}
+          {saved ? "SauvegardÃ© âœ“" : "Sauvegarder"}
         </Button>
       </div>
 
@@ -63,30 +63,30 @@ export default function ParametresPage() {
         <Tabs defaultValue="etablissement">
           <TabsList className="mb-6 h-10">
             <TabsTrigger value="etablissement" className="gap-2 text-sm">
-              <Building2 size={14} aria-hidden="true" />Établissement
+              <Building2 size={14} aria-hidden="true" />Ã‰tablissement
             </TabsTrigger>
             <TabsTrigger value="academique" className="gap-2 text-sm">
-              <BookOpen size={14} aria-hidden="true" />Académique
+              <BookOpen size={14} aria-hidden="true" />AcadÃ©mique
             </TabsTrigger>
             <TabsTrigger value="utilisateurs" className="gap-2 text-sm">
               <Users size={14} aria-hidden="true" />Utilisateurs
             </TabsTrigger>
             <TabsTrigger value="securite" className="gap-2 text-sm">
-              <Shield size={14} aria-hidden="true" />Sécurité
+              <Shield size={14} aria-hidden="true" />SÃ©curitÃ©
             </TabsTrigger>
           </TabsList>
 
-          {/* ── ÉTABLISSEMENT ── */}
+          {/* â”€â”€ Ã‰TABLISSEMENT â”€â”€ */}
           <TabsContent value="etablissement">
             <Card className="border border-card-border shadow-sm max-w-2xl">
               <CardHeader className="pb-4">
-                <CardTitle className="text-base">Informations de l'établissement</CardTitle>
-                <CardDescription className="text-xs">Données générales de l'université affichées dans les documents officiels.</CardDescription>
+                <CardTitle className="text-base">Informations de l'Ã©tablissement</CardTitle>
+                <CardDescription className="text-xs">DonnÃ©es gÃ©nÃ©rales de l'universitÃ© affichÃ©es dans les documents officiels.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <FormSection title="Identité">
-                  <FieldRow label="Nom de l'université" id="univ-nom">
-                    <Input id="univ-nom" defaultValue="Université UniGest" className="h-9" />
+                <FormSection title="IdentitÃ©">
+                  <FieldRow label="Nom de l'universitÃ©" id="univ-nom">
+                    <Input id="univ-nom" defaultValue="UniversitÃ© UniGest" className="h-9" />
                   </FieldRow>
                   <FieldRow label="Sigle" id="univ-sigle">
                     <Input id="univ-sigle" defaultValue="UG" className="h-9 max-w-[120px]" />
@@ -95,34 +95,34 @@ export default function ParametresPage() {
                     <Input id="univ-slogan" defaultValue="L'excellence au service de la nation" className="h-9" />
                   </FieldRow>
                 </FormSection>
-                <FormSection title="Coordonnées">
+                <FormSection title="CoordonnÃ©es">
                   <FieldRow label="Email officiel" id="univ-email">
                     <Input id="univ-email" type="email" defaultValue="contact@univ.ci" className="h-9" />
                   </FieldRow>
-                  <FieldRow label="Téléphone" id="univ-tel">
+                  <FieldRow label="TÃ©lÃ©phone" id="univ-tel">
                     <Input id="univ-tel" defaultValue="+225 27 00 00 000" className="h-9" />
                   </FieldRow>
                   <FieldRow label="Adresse" id="univ-adresse">
-                    <Input id="univ-adresse" defaultValue="Abidjan, Côte d'Ivoire" className="h-9" />
+                    <Input id="univ-adresse" defaultValue="Abidjan, CÃ´te d'Ivoire" className="h-9" />
                   </FieldRow>
                   <FieldRow label="Site web" id="univ-web">
-                    <Input id="univ-web" defaultValue="https://www.univ.ci" className="h-9" />
+                    <Input id="univ-web" defaultValue="Application locale" className="h-9" />
                   </FieldRow>
                 </FormSection>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* ── ACADÉMIQUE ── */}
+          {/* â”€â”€ ACADÃ‰MIQUE â”€â”€ */}
           <TabsContent value="academique">
             <Card className="border border-card-border shadow-sm max-w-2xl">
               <CardHeader className="pb-4">
-                <CardTitle className="text-base">Configuration académique</CardTitle>
-                <CardDescription className="text-xs">Paramètres de l'année universitaire, des périodes et des seuils de validation.</CardDescription>
+                <CardTitle className="text-base">Configuration acadÃ©mique</CardTitle>
+                <CardDescription className="text-xs">ParamÃ¨tres de l'annÃ©e universitaire, des pÃ©riodes et des seuils de validation.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <FormSection title="Année universitaire">
-                  <FieldRow label="Année en cours" id="annee-courante">
+                <FormSection title="AnnÃ©e universitaire">
+                  <FieldRow label="AnnÃ©e en cours" id="annee-courante">
                     <Select defaultValue="2024-2025">
                       <SelectTrigger id="annee-courante" className="h-9"><SelectValue /></SelectTrigger>
                       <SelectContent>
@@ -130,10 +130,10 @@ export default function ParametresPage() {
                       </SelectContent>
                     </Select>
                   </FieldRow>
-                  <FieldRow label="Date de rentrée" id="date-rentree">
+                  <FieldRow label="Date de rentrÃ©e" id="date-rentree">
                     <Input id="date-rentree" type="date" defaultValue="2024-09-02" className="h-9" />
                   </FieldRow>
-                  <FieldRow label="Date de clôture" id="date-cloture">
+                  <FieldRow label="Date de clÃ´ture" id="date-cloture">
                     <Input id="date-cloture" type="date" defaultValue="2025-06-30" className="h-9" />
                   </FieldRow>
                 </FormSection>
@@ -141,11 +141,11 @@ export default function ParametresPage() {
                   <FieldRow label="Ouverture des inscriptions" id="ins-debut">
                     <Input id="ins-debut" type="date" defaultValue="2024-07-01" className="h-9" />
                   </FieldRow>
-                  <FieldRow label="Clôture des inscriptions L1" id="ins-fin">
+                  <FieldRow label="ClÃ´ture des inscriptions L1" id="ins-fin">
                     <Input id="ins-fin" type="date" defaultValue="2024-07-31" className="h-9" />
                   </FieldRow>
                 </FormSection>
-                <FormSection title="Validation académique">
+                <FormSection title="Validation acadÃ©mique">
                   <FieldRow label="Note de passage (sur 20)" id="note-passage">
                     <Input id="note-passage" type="number" min="0" max="20" defaultValue="10" className="h-9 max-w-[120px]" />
                   </FieldRow>
@@ -157,13 +157,13 @@ export default function ParametresPage() {
             </Card>
           </TabsContent>
 
-          {/* ── UTILISATEURS ── */}
+          {/* â”€â”€ UTILISATEURS â”€â”€ */}
           <TabsContent value="utilisateurs">
             <div className="space-y-4 max-w-4xl">
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-sm font-semibold">Comptes administrateurs</h2>
-                  <p className="text-xs text-muted-foreground mt-0.5">{adminUsers.length} comptes enregistrés</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{adminUsers.length} comptes enregistrÃ©s</p>
                 </div>
                 <Button size="sm" className="h-9 gap-1.5">
                   <Users size={14} aria-hidden="true" />Nouvel utilisateur
@@ -174,8 +174,8 @@ export default function ParametresPage() {
                   <TableHeader>
                     <TableRow className="bg-muted/30">
                       <TableHead className="text-xs font-semibold uppercase tracking-wide">Utilisateur</TableHead>
-                      <TableHead className="text-xs font-semibold uppercase tracking-wide hidden sm:table-cell">Rôle</TableHead>
-                      <TableHead className="text-xs font-semibold uppercase tracking-wide hidden md:table-cell">Dernière connexion</TableHead>
+                      <TableHead className="text-xs font-semibold uppercase tracking-wide hidden sm:table-cell">RÃ´le</TableHead>
+                      <TableHead className="text-xs font-semibold uppercase tracking-wide hidden md:table-cell">DerniÃ¨re connexion</TableHead>
                       <TableHead className="text-xs font-semibold uppercase tracking-wide">Statut</TableHead>
                       <TableHead className="sr-only">Actions</TableHead>
                     </TableRow>
@@ -216,18 +216,18 @@ export default function ParametresPage() {
             </div>
           </TabsContent>
 
-          {/* ── SÉCURITÉ ── */}
+          {/* â”€â”€ SÃ‰CURITÃ‰ â”€â”€ */}
           <TabsContent value="securite">
             <Card className="border border-card-border shadow-sm max-w-2xl">
               <CardHeader className="pb-4">
-                <CardTitle className="text-base">Sécurité & accès</CardTitle>
-                <CardDescription className="text-xs">Politique de mot de passe et paramètres de sécurité du système.</CardDescription>
+                <CardTitle className="text-base">SÃ©curitÃ© & accÃ¨s</CardTitle>
+                <CardDescription className="text-xs">Politique de mot de passe et paramÃ¨tres de sÃ©curitÃ© du systÃ¨me.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <FormSection title="Mot de passe administrateur">
                   <FieldRow label="Nouveau mot de passe" id="new-pwd">
                     <div className="relative">
-                      <Input id="new-pwd" type={showPwd ? "text" : "password"} placeholder="••••••••" className="h-9 pr-9" />
+                      <Input id="new-pwd" type={showPwd ? "text" : "password"} placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" className="h-9 pr-9" />
                       <button
                         type="button"
                         onClick={() => setShowPwd(p => !p)}
@@ -239,18 +239,18 @@ export default function ParametresPage() {
                     </div>
                   </FieldRow>
                   <FieldRow label="Confirmer" id="confirm-pwd">
-                    <Input id="confirm-pwd" type="password" placeholder="••••••••" className="h-9" />
+                    <Input id="confirm-pwd" type="password" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" className="h-9" />
                   </FieldRow>
                 </FormSection>
 
                 <Separator />
 
-                <FormSection title="Politique de sécurité">
+                <FormSection title="Politique de sÃ©curitÃ©">
                   {[
-                    { id:"2fa", label:"Authentification à deux facteurs", desc:"Exiger la vérification en deux étapes pour les admins.", default:false },
-                    { id:"session-timeout", label:"Déconnexion automatique", desc:"Déconnecter les sessions inactives après 30 minutes.", default:true },
-                    { id:"log-access", label:"Journal des accès", desc:"Enregistrer toutes les connexions et actions des admins.", default:true },
-                    { id:"ip-restrict", label:"Restriction par IP", desc:"Limiter l'accès à des adresses IP autorisées.", default:false },
+                    { id:"2fa", label:"Authentification Ã  deux facteurs", desc:"Exiger la vÃ©rification en deux Ã©tapes pour les admins.", default:false },
+                    { id:"session-timeout", label:"DÃ©connexion automatique", desc:"DÃ©connecter les sessions inactives aprÃ¨s 30 minutes.", default:true },
+                    { id:"log-access", label:"Journal des accÃ¨s", desc:"Enregistrer toutes les connexions et actions des admins.", default:true },
+                    { id:"ip-restrict", label:"Restriction par IP", desc:"Limiter l'accÃ¨s Ã  des adresses IP autorisÃ©es.", default:false },
                   ].map(opt => (
                     <div key={opt.id} className="flex items-start justify-between gap-4 py-2">
                       <div>
@@ -268,11 +268,11 @@ export default function ParametresPage() {
                   <div className="flex items-start justify-between gap-4 py-2">
                     <div>
                       <p className="text-sm font-medium">Sauvegarde automatique</p>
-                      <p className="text-xs text-muted-foreground mt-0.5">Effectuer une sauvegarde complète chaque nuit à 02h00.</p>
+                      <p className="text-xs text-muted-foreground mt-0.5">Effectuer une sauvegarde complÃ¨te chaque nuit Ã  02h00.</p>
                     </div>
                     <Switch defaultChecked aria-label="Sauvegarde automatique" />
                   </div>
-                  <FieldRow label="Rétention (jours)" id="backup-retention">
+                  <FieldRow label="RÃ©tention (jours)" id="backup-retention">
                     <Input id="backup-retention" type="number" defaultValue="30" className="h-9 max-w-[120px]" />
                   </FieldRow>
                 </FormSection>
@@ -284,3 +284,4 @@ export default function ParametresPage() {
     </div>
   );
 }
+
