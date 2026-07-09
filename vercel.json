@@ -5,7 +5,7 @@
       "src": "artifacts/university-dashboard/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "artifacts/university-dashboard/dist"
+        "distDir": "artifacts/university-dashboard/dist/public"
       }
     },
     {
@@ -23,11 +23,11 @@
     },
     {
       "src": "^/(.*)$",
-      "dest": "/artifacts/university-dashboard/dist/$1"
+      "dest": "/artifacts/university-dashboard/dist/public/$1"
     },
     {
       "src": "^/.*$",
-      "dest": "/artifacts/university-dashboard/dist/index.html"
+      "dest": "/artifacts/university-dashboard/dist/public/index.html"
     }
   ]
 }
