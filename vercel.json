@@ -7,24 +7,9 @@
       "config": {
         "distDir": "artifacts/university-dashboard/dist/public"
       }
-    },
-    {
-      "src": "artifacts/api-server/dist/index.mjs",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["artifacts/api-server/dist/**"]
-      }
     }
   ],
   "routes": [
-    {
-      "src": "^/api/(.*)$",
-      "dest": "/artifacts/api-server/dist/index.mjs"
-    },
-    {
-      "src": "^/(.*)$",
-      "dest": "/artifacts/university-dashboard/dist/public/$1"
-    },
     {
       "src": "^/.*$",
       "dest": "/artifacts/university-dashboard/dist/public/index.html"

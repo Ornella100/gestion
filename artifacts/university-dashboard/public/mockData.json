@@ -1,0 +1,93 @@
+{
+  "stats": {
+    "students": 3842,
+    "teachers": 247,
+    "filieres": 18,
+    "classes": 64,
+    "inscriptions": 412,
+    "paiementsJour": 38,
+    "montantEncaisse": 2850000,
+    "studentsTrend": 5.2,
+    "teachersTrend": 1.6,
+    "inscriptionsTrend": 8.1,
+    "montantTrend": 12.4
+  },
+  "enrollmentsChart": [
+    { "mois": "Août", "inscriptions": 312 },
+    { "mois": "Sep", "inscriptions": 298 },
+    { "mois": "Oct", "inscriptions": 275 },
+    { "mois": "Nov", "inscriptions": 260 },
+    { "mois": "Déc", "inscriptions": 240 },
+    { "mois": "Jan", "inscriptions": 410 },
+    { "mois": "Fév", "inscriptions": 385 },
+    { "mois": "Mar", "inscriptions": 352 },
+    { "mois": "Avr", "inscriptions": 330 },
+    { "mois": "Mai", "inscriptions": 290 },
+    { "mois": "Juin", "inscriptions": 260 },
+    { "mois": "Juil", "inscriptions": 412 }
+  ],
+  "revenueChart": [
+    { "mois": "Août", "scolarite": 1800000, "autres": 320000 },
+    { "mois": "Sep", "scolarite": 1650000, "autres": 290000 },
+    { "mois": "Oct", "scolarite": 1500000, "autres": 260000 },
+    { "mois": "Nov", "scolarite": 1400000, "autres": 240000 },
+    { "mois": "Déc", "scolarite": 1200000, "autres": 200000 },
+    { "mois": "Jan", "scolarite": 2400000, "autres": 410000 },
+    { "mois": "Fév", "scolarite": 2200000, "autres": 380000 },
+    { "mois": "Mar", "scolarite": 2000000, "autres": 350000 },
+    { "mois": "Avr", "scolarite": 1850000, "autres": 320000 },
+    { "mois": "Mai", "scolarite": 1650000, "autres": 290000 },
+    { "mois": "Juin", "scolarite": 1450000, "autres": 260000 },
+    { "mois": "Juil", "scolarite": 2850000, "autres": 430000 }
+  ],
+  "recentStudents": [
+    { "id": "ETU-2024-001", "nom": "Koné Aminata", "filiere": "Génie Informatique", "classe": "L1-GI-A", "date": "2024-07-07", "statut": "Actif" },
+    { "id": "ETU-2024-002", "nom": "Diallo Mamadou", "filiere": "Gestion des Entreprises", "classe": "L1-GE-B", "date": "2024-07-07", "statut": "Actif" },
+    { "id": "ETU-2024-003", "nom": "Traoré Fatoumata", "filiere": "Droit des Affaires", "classe": "L2-DA-A", "date": "2024-07-06", "statut": "Actif" },
+    { "id": "ETU-2024-004", "nom": "Coulibaly Ibrahim", "filiere": "Génie Civil", "classe": "L1-GC-A", "date": "2024-07-06", "statut": "Actif" },
+    { "id": "ETU-2024-005", "nom": "Ouédraogo Marie", "filiere": "Santé Publique", "classe": "L3-SP-B", "date": "2024-07-05", "statut": "Actif" },
+    { "id": "ETU-2024-006", "nom": "Sané Ibrahima", "filiere": "Génie Informatique", "classe": "L2-GI-A", "date": "2024-07-05", "statut": "En attente" },
+    { "id": "ETU-2024-007", "nom": "Bah Aïssatou", "filiere": "Sciences Économiques", "classe": "L1-SE-C", "date": "2024-07-04", "statut": "Actif" },
+    { "id": "ETU-2024-008", "nom": "Camara Seydou", "filiere": "Génie Électrique", "classe": "L1-GEL-A", "date": "2024-07-04", "statut": "Actif" }
+  ],
+  "recentPayments": [
+    { "ref": "PAY-2024-0412", "etudiant": "Koné Aminata", "type": "Scolarité", "montant": 450000, "date": "07/07/2024", "statut": "Validé" },
+    { "ref": "PAY-2024-0411", "etudiant": "Diallo Mamadou", "type": "Scolarité", "montant": 450000, "date": "07/07/2024", "statut": "Validé" },
+    { "ref": "PAY-2024-0410", "etudiant": "Traoré Fatoumata", "type": "Frais divers", "montant": 75000, "date": "07/07/2024", "statut": "Validé" },
+    { "ref": "PAY-2024-0409", "etudiant": "Coulibaly Ibrahim", "type": "Scolarité", "montant": 450000, "date": "07/07/2024", "statut": "En attente" },
+    { "ref": "PAY-2024-0408", "etudiant": "Ouédraogo Marie", "type": "Scolarité", "montant": 380000, "date": "07/07/2024", "statut": "Validé" },
+    { "ref": "PAY-2024-0407", "etudiant": "Sané Ibrahima", "type": "Inscription", "montant": 50000, "date": "07/07/2024", "statut": "Validé" },
+    { "ref": "PAY-2024-0406", "etudiant": "Bah Aïssatou", "type": "Scolarité", "montant": 450000, "date": "07/07/2024", "statut": "Rejeté" },
+    { "ref": "PAY-2024-0405", "etudiant": "Camara Seydou", "type": "Scolarité", "montant": 450000, "date": "07/07/2024", "statut": "Validé" }
+  ],
+  "events": [
+    { "id": 1, "titre": "Rentrée académique 2024-2025", "date": "2024-09-02", "type": "Académique", "description": "Début de l'année universitaire" },
+    { "id": 2, "titre": "Examens de mi-semestre", "date": "2024-11-11", "type": "Examen", "description": "Sessions d'examens pour tous les niveaux" },
+    { "id": 3, "titre": "Conseil d'administration", "date": "2024-07-15", "type": "Administratif", "description": "Réunion du CA - Salle des délibérations" },
+    { "id": 4, "titre": "Journée portes ouvertes", "date": "2024-07-20", "type": "Événement", "description": "Accueil des futurs étudiants" },
+    { "id": 5, "titre": "Clôture des inscriptions L1", "date": "2024-07-31", "type": "Inscription", "description": "Date limite d'inscription en Licence 1" },
+    { "id": 6, "titre": "Soutenance de thèses", "date": "2024-08-20", "type": "Académique", "description": "Soutenances Doctorat — Amphithéâtre A" },
+    { "id": 7, "titre": "Réunion pédagogique", "date": "2024-07-10", "type": "Administratif", "description": "Réunion du corps enseignant" }
+  ],
+  "academicYears": [
+    { "value": "2024-2025", "label": "2024-2025 (En cours)" },
+    { "value": "2023-2024", "label": "2023-2024" },
+    { "value": "2022-2023", "label": "2022-2023" },
+    { "value": "2021-2022", "label": "2021-2022" }
+  ],
+  "etudiants": [
+    { "matricule": "ETU-2024-001", "nom": "Koné", "prenom": "Aminata", "email": "a.kone@univ.ci", "telephone": "+225 07 00 00 001", "genre": "F", "filiere": "Génie Informatique", "filiereCode": "GI", "classe": "L1-GI-A", "niveau": "L1", "annee_entree": 2024, "statut": "Actif", "date_inscription": "07/07/2024" }
+  ],
+  "enseignants": [
+    { "matricule": "ENS-001", "nom": "Dr. Ouattara", "prenom": "Ibrahim", "email": "i.ouattara@univ.ci", "telephone": "+225 05 00 00 001", "specialite": "Algorithmique & Structures de données", "grade": "Maître-assistant", "statut": "Permanent" }
+  ],
+  "filieres": [
+    { "code": "GI", "intitule": "Génie Informatique", "departement": "Sciences & Technologies", "responsable": "Dr. Ouattara Ibrahim", "duree": 3, "niveaux": ["L1", "L2", "L3"], "nb_etudiants": 482, "nb_classes": 6, "capacite_max": 540, "description": "Formation aux métiers du développement logiciel, réseaux, IA et systèmes d'information." },
+    { "code": "GE", "intitule": "Gestion des Entreprises", "departement": "Sciences Économiques & Gestion", "responsable": "Dr. Traoré Seydou", "duree": 3, "niveaux": ["L1", "L2", "L3"], "nb_etudiants": 624, "nb_classes": 8, "capacite_max": 720, "description": "Management, ressources humaines, stratégie et entrepreneuriat." },
+    { "code": "DA", "intitule": "Droit des Affaires", "departement": "Sciences Juridiques", "responsable": "Prof. Koné Aminata", "duree": 3, "niveaux": ["L1", "L2", "L3"], "nb_etudiants": 556, "nb_classes": 7, "capacite_max": 630, "description": "Droit commercial, droit des contrats, droit fiscal et droit international des affaires." }
+  ],
+  "classes": [
+    { "code": "L1-GI-A", "intitule": "Licence 1 GI — Groupe A", "filiere": "Génie Informatique", "filiereCode": "GI", "niveau": "L1", "effectif": 82, "capacite": 90, "enseignant_principal": "Dr. Ouattara Ibrahim", "salle": "Amphi A", "horaire": "Lun–Ven 08h–17h" },
+    { "code": "L1-GE-B", "intitule": "Licence 1 GE — Groupe B", "filiere": "Gestion des Entreprises", "filiereCode": "GE", "niveau": "L1", "effectif": 85, "capacite": 90, "enseignant_principal": "Mme. Barry Kadiatou", "salle": "Amphi E", "horaire": "Lun–Ven 08h–17h" }
+  ]
+}

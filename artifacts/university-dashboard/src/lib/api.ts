@@ -1,13 +1,39 @@
-const API_BASE = "/api";
+// Load mock data from local JSON file instead of API
+let mockDataCache: Record<string, unknown> | null = null;
+
+async function loadMockData() {
+  if (!mockDataCache) {
+    const res = await fetch("/mockData.json");
+    if (!res.ok) throw new Error(`Failed to load mock data: ${res.status}`);
+    mockDataCache = await res.json();
+  }
+  return mockDataCache;
+}
 
 export async function fetchApi<T>(path: string, params?: Record<string, string>): Promise<T> {
-  const url = new URL(`${API_BASE}${path}`, window.location.origin);
-  if (params) {
-    Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+  const data = await loadMockData();
+  
+  // Map API paths to mock data keys
+  const pathMap: Record<string, string> = {
+    "/dashboard/stats": "stats",
+    "/dashboard/enrollments/chart": "enrollmentsChart",
+    "/dashboard/revenue/chart": "revenueChart",
+    "/dashboard/students/recent": "recentStudents",
+    "/dashboard/payments/recent": "recentPayments",
+    "/dashboard/events": "events",
+    "/dashboard/academic-years": "academicYears",
+    "/modules/etudiants": "etudiants",
+    "/modules/enseignants": "enseignants",
+    "/modules/filieres": "filieres",
+    "/modules/classes": "classes",
+  };
+  
+  const key = pathMap[path];
+  if (!key || !(key in data)) {
+    throw new Error(`Mock data not found for path: ${path}`);
   }
-  const res = await fetch(url.toString());
-  if (!res.ok) throw new Error(`API error ${res.status}: ${path}`);
-  return res.json() as Promise<T>;
+  
+  return data[key] as T;
 }
 
 export interface Stats {
