@@ -3,7 +3,10 @@
   "builds": [
     {
       "src": "artifacts/university-dashboard/package.json",
-      "use": "@vercel/static-build"
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "artifacts/university-dashboard/dist"
+      }
     }
   ]
 }
